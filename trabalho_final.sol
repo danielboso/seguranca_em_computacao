@@ -3,13 +3,25 @@ pragma solidity ^0.4.0;
 ///   Ancoramento Temporal
 /// ------------------------------------------------------
 
-/// Medição do tempo decorrido entre duas transações
+/// Contador de Bloco
+contract BlockCount {
 
+}
+
+/// Medição do tempo decorrido entre duas transações
+contract ElapsedTimeTwoTransactions {
+
+}
 
 /// Tempo Atual
+contract TimeNow {
 
+}
 
 /// Medição do tempo decorrido desde uma dada transação
+contract ElapsedTimeBetweenTransactions {
+
+}
 
 /// ------------------------------------------------------
 ///   Controle de estacionamento
