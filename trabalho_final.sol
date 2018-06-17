@@ -1,7 +1,30 @@
-pragma solidity ^0.4.0;
+pragma solidity ^0.4.11;
+
 /// ------------------------------------------------------
-///   Ancoramento Temporal
+/// Progresso                                            -
 /// ------------------------------------------------------
+/// -> Ancoramento Temporal                              -
+///     N -> Medição do tempo decorrido                  -
+///     S -> Tempo Atual (último bloco)                  -
+///     N -> Medição do tempo decorrido desde uma dada   -
+///          transação                                   -
+///                                                      -
+/// -> Controle de Estacionamento                        -
+///     N -> Registro da entrada e saída de veículos     -
+///     N -> Medição do tempo de estadia do veículo no   -
+///          estacionamento                              -
+///     N -> Cobrança extra por exceder o horário limite -
+/// ------------------------------------------------------
+
+/// ------------------------------------------------------
+///   Ancoramento Temporal                               -
+/// ------------------------------------------------------
+contract AnchoringTemp {
+
+    function timeLastBlock() {
+        return block.timestamp;
+    }
+}
 
 /// Contador de Bloco
 contract BlockCount {
