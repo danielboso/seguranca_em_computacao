@@ -26,11 +26,6 @@ contract AnchoringTemp {
     }
 }
 
-/// Contador de Bloco
-contract BlockCount {
-
-}
-
 /// Medição do tempo decorrido entre duas transações
 contract ElapsedTimeTwoTransactions {
 
