@@ -21,14 +21,9 @@ pragma solidity ^0.4.11;
 /// ------------------------------------------------------
 contract AnchoringTemp {
 
-    function timeLastBlock() {
+    function timeLastBlock() public returns (uint) {
         return block.timestamp;
     }
-}
-
-/// Contador de Bloco
-contract BlockCount {
-
 }
 
 /// Medição do tempo decorrido entre duas transações
