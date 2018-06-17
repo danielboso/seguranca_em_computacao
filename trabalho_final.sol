@@ -21,7 +21,7 @@ pragma solidity ^0.4.11;
 /// ------------------------------------------------------
 contract AnchoringTemp {
 
-    function timeLastBlock() {
+    function timeLastBlock() public returns (uint) {
         return block.timestamp;
     }
 }
