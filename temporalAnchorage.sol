@@ -19,27 +19,26 @@ pragma solidity ^0.4.11;
 /// ------------------------------------------------------
 ///   Ancoramento Temporal                               -
 /// ------------------------------------------------------
-contract AnchoringTemp {
+contract TemporalAnchorage {
 
-    function timeLastBlock() public returns (uint) {
-        return block.timestamp;
+    uint private lastIndex;                 /* Índice do último bloco.              */
+    uint private averageTransactionTime;    /* Tempo médio de cada transação (s).   */
+
+    constructor() public {
+        lastIndex = 0;
+        averageTransactionTime = 30;
+    }
+
+    function currentTime() public view returns (uint) {
+        uint ct = lastIndex * averageTransactionTime;
+        return ct;
     }
 }
 
 /// Medição do tempo decorrido entre duas transações
-contract ElapsedTimeTwoTransactions {
 
-}
-
-/// Tempo Atual
-contract TimeNow {
-
-}
 
 /// Medição do tempo decorrido desde uma dada transação
-contract ElapsedTimeBetweenTransactions {
-
-}
 
 /// ------------------------------------------------------
 ///   Controle de estacionamento
