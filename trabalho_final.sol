@@ -1,4 +1,4 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.0;
 
 /// ------------------------------------------------------
 /// Progresso                                            -
@@ -46,15 +46,35 @@ contract ElapsedTimeBetweenTransactions {
 /// ------------------------------------------------------
 contract Estacionamento {
   struct Cliente {
-    uint beginTimeParked;
-    uint finalTimeParked;
+    uint256 beginTimeParked;
+    uint256 finalTimeParked;
+    uint256 timeOfParking;
+    uint priceToPay;
   }
 
   address public parking;
   mapping(address => Cliente) public clients;
+  uint priceForMinute;
 
-  constructor() public {
+  constructor(uint price) public {
     parking = msg.sender;
+    priceForMinute = price;
+  }
+
+  // Registro do horário de entrada do veículo
+  function registerClient(address client) public {
+    if (msg.sender != parking) return;
+    clients[client].beginTimeParked = now;
+  }
+
+  function registerExitClient(address client) public {
+    if (msg.sender != parking) return;
+    clients[client].finalTimeParked = now;
+  }
+
+  function timeOfParking(address client) public returns (uint){
+    if (msg.sender != parking) return;
+    clients[client].timeOfParking = clients[client].finalTimeParked - clients[client].beginTimeParked;
   }
 }
 ///   Registro da entrada e saída de veículos
