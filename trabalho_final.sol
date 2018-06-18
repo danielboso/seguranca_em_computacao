@@ -20,8 +20,8 @@ pragma solidity ^0.4.11;
 ///   Ancoramento Temporal                               -
 /// ------------------------------------------------------
 contract AnchoringTemp {
-
-    function timeLastBlock() public returns (uint) {
+    // Retorna o tempo
+    function timeLastBlock() returns (uint) {
         return block.timestamp;
     }
 }
@@ -44,7 +44,9 @@ contract ElapsedTimeBetweenTransactions {
 /// ------------------------------------------------------
 ///   Controle de estacionamento
 /// ------------------------------------------------------
-
+contract Estacionamento {
+  
+}
 ///   Registro da entrada e saída de veículos
 
 
