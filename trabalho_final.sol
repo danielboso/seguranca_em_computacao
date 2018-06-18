@@ -27,43 +27,81 @@ contract AnchoringTemp {
 ///   Controle de estacionamento
 /// ------------------------------------------------------
 contract Parking {
+
   struct Car {
+    bool parked;
     uint256 timeIn;
     uint256 timeOut;
     uint256 timeOfParking;
     uint priceToPay;
   }
 
+  uint constant MAX = 6;
   address public parking;
+
   mapping(address => Car) public clients;
-  uint priceForHour;
+  mapping(address => address) public extras;
+
+  event Parked(address car);
+  event Leave(address car);
+  event ExtraPayed(address car);
+
+  uint priceForHour = 10;
 
   // Constructor for the parking
-  constructor(uint price) public {
+  constructor() public {
     parking = msg.sender;
-    priceForHour = price;
   }
 
-  function changePrice(uint newPrice) {
+  function changePrice(uint newPrice) public {
     if (msg.sender != parking) return;
     priceForHour = newPrice;
   }
 
+  function returnPrice() public view returns (uint) {
+    return priceForHour;
+  }
+
   // Register of the time that vehicle entry
-  function registerClient(address client) public {
-    if (msg.sender != parking) return;
-    clients[client].beginTimeParked = now;
+  function parkCar() public {
+      if ( msg.sender == parking || clients[msg.sender].parked == true) return;
+      clients[msg.sender].parked = true;
+      clients[msg.sender].timeIn = now;
+      emit Parked(msg.sender);
   }
 
-  // Register of the time that vehicle exited
-  function registerExitClient(address client) public {
-    if (msg.sender != parking) return;
-    clients[client].finalTimeParked = now;
+  function secondsToHours(uint256 secondsParked) private pure returns (uint256) {
+    return secondsParked / 3600;
   }
 
-  function timeOfParking(address client) public returns (uint){
-    if (msg.sender != parking) return;
-    clients[client].timeOfParking = clients[client].finalTimeParked - clients[client].beginTimeParked;
+  function remainingMinutes(uint256 secondsParked) private pure returns (uint256)  {
+    return (secondsParked % 3600) / 60;
+  }
+
+  function leaveParking() public {
+      if ( msg.sender == parking || clients[msg.sender].parked == false) return;
+
+      uint leavingTime = now;
+
+      // 3600 seconds = 1
+      // Limit of MAX Hour
+      clients[msg.sender].timeOut = leavingTime;
+      uint256 timeOfParking = leavingTime - clients[msg.sender].timeIn;
+      if(leavingTime < clients[msg.sender].timeIn + (MAX * 3600)){
+          clients[msg.sender].parked = false;
+          clients[msg.sender].timeOfParking = timeOfParking;
+          uint totalToPay = secondsToHours(timeOfParking)*priceForHour +
+          remainingMinutes(timeOfParking)*(priceForHour/60);
+          msg.sender.call.gas(2500000).value(totalToPay);
+          emit Leave(msg.sender);
+      }else{
+          uint256 extraTime = timeOfParking - (MAX * 3600);
+          totalToPay = (MAX * priceForHour) +
+          secondsToHours(extraTime)*priceForHour +
+          remainingMinutes(extraTime)*(priceForHour/60);
+          msg.sender.call.gas(2500000).value(totalToPay);
+          emit Leave(msg.sender);
+      }
   }
 }
 ///   Registro da entrada e saída de veículos
@@ -72,8 +110,8 @@ contract Registro {
 
     struct car {
         bool parked;
-        uint time_in;
-        uint time_out;
+        uint256 time_in;
+        uint256 time_out;
     }
 
     uint constant MAX = 6;
@@ -111,7 +149,7 @@ contract Registro {
         }
     }
 
-    function payExtra(uint amount)public {
+    function payExtra(uint amount) public {
 
         if (parking[msg.sender].parked == false) return;
 
