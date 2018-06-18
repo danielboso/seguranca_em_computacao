@@ -45,7 +45,10 @@ contract ElapsedTimeBetweenTransactions {
 ///   Controle de estacionamento
 /// ------------------------------------------------------
 contract Estacionamento {
-  
+  struct Cliente {
+    uint beginTimeParked;
+    uint finalTimeParked;
+  }
 }
 ///   Registro da entrada e saída de veículos
 
