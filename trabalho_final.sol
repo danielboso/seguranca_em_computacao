@@ -26,22 +26,27 @@ contract AnchoringTemp {
 /// ------------------------------------------------------
 ///   Controle de estacionamento
 /// ------------------------------------------------------
-contract Estacionamento {
-  struct Cliente {
-    uint256 beginTimeParked;
-    uint256 finalTimeParked;
+contract Parking {
+  struct Car {
+    uint256 timeIn;
+    uint256 timeOut;
     uint256 timeOfParking;
     uint priceToPay;
   }
 
   address public parking;
-  mapping(address => Cliente) public clients;
-  uint priceForMinute;
+  mapping(address => Car) public clients;
+  uint priceForHour;
 
   // Constructor for the parking
   constructor(uint price) public {
     parking = msg.sender;
-    priceForMinute = price;
+    priceForHour = price;
+  }
+
+  function changePrice(uint newPrice) {
+    if (msg.sender != parking) return;
+    priceForHour = newPrice;
   }
 
   // Register of the time that vehicle entry
