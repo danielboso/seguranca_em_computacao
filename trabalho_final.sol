@@ -89,7 +89,7 @@ contract Registro {
 
     }
 
-    uint constant MAX = 6; 
+    uint constant MAX = 6;
     address public controller;
 
     mapping(address => car) public parking;
@@ -124,10 +124,10 @@ contract Registro {
         }else{
 
             extras[msg.sender] = new Extra(msg.sender);
-    
+
 
         }
-       
+
     }
 
     function payExtra(uint amount)public {
@@ -143,7 +143,7 @@ contract Registro {
             parking[msg.sender].time_out = leavingTime;
             emit ExtraPayed(msg.sender);
         }
-        
+
     }
 
 }
