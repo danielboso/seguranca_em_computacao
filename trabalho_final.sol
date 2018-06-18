@@ -129,10 +129,10 @@ contract Registro {
         if (parking[msg.sender].parked == false) return;
 
         Extra extra = Extra(extras[msg.sender]);
-        bool statu = extra.send(controller,amount);
+        bool status = extra.send(controller,amount);
         uint leavingTime = now;
 
-        if(statu){
+        if(status) {
             parking[msg.sender].parked = false;
             parking[msg.sender].time_out = leavingTime;
             emit ExtraPayed(msg.sender);
