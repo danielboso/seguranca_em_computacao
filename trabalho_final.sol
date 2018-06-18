@@ -21,7 +21,7 @@ pragma solidity ^0.4.11;
 /// ------------------------------------------------------
 contract AnchoringTemp {
     // Retorna o tempo
-    function timeLastBlock() returns (uint) {
+    function timeLastBlock() public returns (uint) {
         return block.timestamp;
     }
 }
@@ -48,6 +48,13 @@ contract Estacionamento {
   struct Cliente {
     uint beginTimeParked;
     uint finalTimeParked;
+  }
+
+  address public parking;
+  mapping(address => Cliente) public clients;
+
+  constructor() public {
+    parking = msg.sender;
   }
 }
 ///   Registro da entrada e saída de veículos
