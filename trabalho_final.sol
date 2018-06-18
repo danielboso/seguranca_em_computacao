@@ -20,24 +20,6 @@ pragma solidity ^0.4.0;
 ///   Ancoramento Temporal                               -
 /// ------------------------------------------------------
 contract AnchoringTemp {
-    // Retorna o tempo
-    function timeLastBlock() public returns (uint) {
-        return block.timestamp;
-    }
-}
-
-/// Medição do tempo decorrido entre duas transações
-contract ElapsedTimeTwoTransactions {
-
-}
-
-/// Tempo Atual
-contract TimeNow {
-
-}
-
-/// Medição do tempo decorrido desde uma dada transação
-contract ElapsedTimeBetweenTransactions {
 
 }
 
