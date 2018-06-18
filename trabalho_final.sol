@@ -49,11 +49,6 @@ contract Parking {
     priceForHour = newPrice;
   }
 
-  function changePrice(uint newPrice) {
-    if (msg.sender != parking) return;
-    priceForHour = newPrice;
-  }
-
   // Register of the time that vehicle entry
   function registerClient(address client) public {
     if (msg.sender != parking) return;
