@@ -19,8 +19,35 @@ pragma solidity ^0.4.0;
 /// ------------------------------------------------------
 ///   Ancoramento Temporal                               -
 /// ------------------------------------------------------
+contract ConversorSeconds {
+
+  uint256 _timeInSeconds;
+
+  constructor(uint256 timeInSeconds) public {
+    _timeInSeconds = timeInSeconds;
+  }
+
+  function secondsToHours(uint256 secondsParked) public pure returns (uint256) {
+    return secondsParked / 3600;
+  }
+
+  function remainingMinutes(uint256 secondsParked) public pure returns (uint256)  {
+    return (secondsParked % 3600) / 60;
+  }
+
+}
+
 contract AnchoringTemp {
 
+  address ethereumAlarmClock;
+
+  constructor(address addresEthereumAlarmClock) public {
+    ethereumAlarmClock = addresEthereumAlarmClock;
+  }
+
+  function getTime() returns (uint256) public {
+      return require(ethereumAlarmClock.call());
+  }
 }
 
 /// ------------------------------------------------------
