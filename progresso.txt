@@ -1,0 +1,21 @@
+    Endereços úteis ou que podem vir a ser úteis
+
+Alarm Contract Address (Live): 0x6c8f2a135f6ed072de4503bd7c4999a1a17f824b
+Scheduler:      0xe54d323f9ef17c1f0dede47ecc86a9718fe5ea34
+SchedulerLib:   0x7c1eb207c07e7ab13cf245585bd03d0fa478d034
+CallLib:        0x1deeda36e15ec9e80f3d7414d67a4803ae45fc80
+AccountingLib:  0x89efe605e9ecbe22849cd85d5449cc946c26f8f3
+GrooveLib:      0x6c8f2a135f6ed072de4503bd7c4999a1a17f824b
+
+    Progresso
+    -> Ancoramento Temporal
+        S -> Medição do tempo decorrido
+        S -> Tempo Atual (último bloco)
+        N -> Medição do tempo decorrido desde uma dada
+             transação
+                                            -
+    -> Controle de Estacionamento
+        S -> Registro da entrada e saída de veículos
+        S -> Medição do tempo de estadia do veículo no
+             estacionamento (indiretamente)
+        N -> Cobrança extra por exceder o horário limite
