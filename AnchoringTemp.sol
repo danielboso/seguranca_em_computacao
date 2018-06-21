@@ -5,15 +5,6 @@ contract AnchoringTemp {
 
     address scheduler = 0xE54d323F9Ef17C1F0dEdE47eCC86A9718fE5ea34;
 
-    uint constant TAX_30_DAYS = 10 wei;
-
-    /*  Tempo médio de cada bloco é de 14 segundos
-     *  1 dia tem 3600 segundos / 14 segundos
-     *  Então temos que são gerados aproximadamente 258 blocos por dia
-     */
-    /// Tempo médio de cada bloco é 14 segundos
-    uint constant blocksADay = 258;
-
     /// Tempo desde uma certa transação
     function intervalTime(uint256 startTime) public view returns(uint256) {
         return block.timestamp - startTime;
@@ -48,11 +39,19 @@ contract AnchoringTemp {
                            // destinatário
                 blockTarget(30*blocksADay)]; // O primeiro bloco onde a transação
                                               // poderá ser executada.
-            scheduler.scheduleTransaction.value(0.001 ether)(
+            /*scheduler.scheduleCall(
+                toAddress,
+                bytes4(keccak256("payAfter30Days(toAddress, callValue)")),
+                windowSize,
+                uintArgs); */
+            scheduler.schedule(
                 toAddress,
                 callData,
-                windowSize,
                 uintArgs);
     }
 
+    function payAfter30Days(address toAddress, uint callValue) {
+
+        toAddress.call.gas(2500000).value(callValue);
+    }
 }
