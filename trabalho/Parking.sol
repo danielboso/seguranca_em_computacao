@@ -1,5 +1,6 @@
 pragma solidity ^0.4.24;
 
+// Estacionamento. Um estacionamento usando SmartContract
 contract Parking {
 
   struct Car {
@@ -10,7 +11,9 @@ contract Parking {
     uint priceToPay;
   }
 
+  // Limite o tempo em que um veículo pode permanecer no estacionamento
   uint constant MAX = 6;
+  // Endereço do estacionamento
   address public parking;
 
   mapping(address => Car) public clients;
@@ -20,38 +23,43 @@ contract Parking {
   event Leave(address car);
   event ExtraPayed(address car);
 
+  // Preço cobrado por hora pelo uso do estacionamento
   uint priceForHour = 10;
 
-  // Constructor for the parking
   constructor() public {
     parking = msg.sender;
   }
 
+  // Método para mudar o preço por hora pelo uso do estacionamento
   function changePrice(uint newPrice) public {
     if (msg.sender != parking) return;
     priceForHour = newPrice;
   }
 
+  // Método para consulta do preço por hora pelo uso do estacionamento
   function returnPrice() public view returns (uint) {
     return priceForHour;
   }
 
-  // Register of the time that vehicle entry
+  // Registra a entrada do veículo no estacionamento
   function parkCar() public {
       if ( msg.sender == parking || clients[msg.sender].parked == true) return;
       clients[msg.sender].parked = true;
       clients[msg.sender].timeIn = now;
       emit Parked(msg.sender);
   }
-
+  // Converte segundos para horas. Pois o tempo é medido em segundos
   function secondsToHours(uint256 secondsParked) private pure returns (uint256) {
     return secondsParked / 3600;
   }
-
+  // Converte segundos restantes da hora por minutos
   function remainingMinutes(uint256 secondsParked) private pure returns (uint256)  {
     return (secondsParked % 3600) / 60;
   }
 
+  /*    Registra a saída do veículo. Caso o veículo ultrapasse o tempo máximo
+   *    permitido, o cliente irá pagar uma multa por isso.
+   */
   function leaveParking() public {
       if ( msg.sender == parking || clients[msg.sender].parked == false) return;
 
